@@ -34,12 +34,12 @@ jobs:
         run: |
           GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o hltt_${{ matrix.goos }}_${{ matrix.goarch }}${{ matrix.goos == 'windows' && '.exe' || '' }} ./...
           mkdir -p artifacts
-          zip -j artifacts/hltt_${{ matrix.goos }}_${{ matrix.goarch }}.zip hltt_${{ matrix.goos }}_${{ matrix.goarch }}${{ matrix.goos == 'windows' && '.exe' || '' }}
+          cp hltt_${{ matrix.goos }}_${{ matrix.goarch }}${{ matrix.goos == 'windows' && '.exe' || '' }} artifacts/
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: hltt_${{ matrix.goos }}_${{ matrix.goarch }}
-          path: artifacts/hltt_${{ matrix.goos }}_${{ matrix.goarch }}.zip
+          path: artifacts/hltt_${{ matrix.goos }}_${{ matrix.goarch }}${{ matrix.goos == 'windows' && '.exe' || '' }}
 
   prepare-and-release:
     needs: build-and-upload-artifacts
@@ -72,11 +72,18 @@ jobs:
           draft: false
           prerelease: false
 
+      - name: check something
+        run: |
+          ls -l
+          ls -l artifacts
+          zip -r artifacts.zip artifacts
+          ls -l
+
       - name: Upload Artifacts to Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            artifacts/**/hltt_*.zip
+            artifacts/**/hltt_*
           fail_on_unmatched_files: true
           tag_name: ${{ steps.generate_tag.outputs.tag }}
         env:
