@@ -7,10 +7,15 @@ This tool allows you to send a large number of HTTP requests in parallel to a sp
 ## Features
 
 -Sending HTTP requests with configurable method (GET, POST, etc.)
+
 -Parallelization of requests with an adjustable number of workers
+
 -Ability to specify custom headers and query parameters
+
 -Real-time progress display during testing
--Detailed summary of test results, including the number of successful/failed requests, total duration, data transferred, and requests per second
+
+-Detailed summary of test results, including the number of successful/failed requests, total duration, data transferred, and requests per
+second
 
 ## Prerequisites
 

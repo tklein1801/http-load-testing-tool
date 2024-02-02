@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'main.go'
+      - 'go.mod'
 
 env:
   GO_VERSION: 1.21.6
